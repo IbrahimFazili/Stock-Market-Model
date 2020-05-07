@@ -25,11 +25,11 @@ df['percent_Change'] = (df['Adj. Close'] - df['Adj. Open']) / df['Adj. Open'] * 
 
 df = df[['Adj. Close', 'HL_change', 'percent_Change', 'Adj. Volume']]
 
-df.fillna(-99999, inplace=True)
 
 #this is the number of days ahead we are predicting the price, subject to change
 #the 0.1
 predicted_days = int(math.ceil(0.1 * len(df)))
+df.fillna(-99999, inplace=True)
 
 #this is what we want to predict, subject to change
 predicting_col = 'Adj. Close'
@@ -37,7 +37,7 @@ predicting_col = 'Adj. Close'
 df['Prediction'] = df[predicting_col].shift(-predicted_days)
 df.dropna(inplace=True)
 
-features = np.array(df.dropna(['Prediction'], 1))
+features = np.array(df.drop(['Prediction'], 1))
 prediction = np.array(df['Prediction'])
 
 #features = preprocessing.scale(features)
